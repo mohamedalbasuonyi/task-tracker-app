@@ -1,33 +1,47 @@
-// script.js
 // Section 1: TODOs
 // TODO: Register submissions from the user on the form.
-// TODO: Determine the value of the data submitted and add it to a JavaScript array calle
+// TODO: Determine the value of the data submitted and add it to a JavaScript array called "tasks".
 // TODO: Call the render function to update the table with the new tasks.
 
-
-
-
-// script.js
 // Section 2: App State Variables
 let tasks = [];
-// script.js
-// Section 3: Cached Element References
+
 // Section 3: Cached Element References
 const taskForm = document.getElementById('taskForm');
-console.log(taskForm+"hello")
 const taskTable = document.getElementById('taskTable');
+const taskNameInput = document.getElementById('taskName');
+const taskDescriptionInput = document.getElementById('taskDescription');
+const taskDeadlineInput = document.getElementById('taskDeadline');
 
 // Function to handle form submissions
 function handleSubmission(event) {
     event.preventDefault();
-    // TODO: Get form input values
-    // TODO: Validate input fields
-    // TODO: Update the tasks array
+    // Get form input values
+    const name = taskNameInput.value;
+    const description = taskDescriptionInput.value;
+    const deadline = taskDeadlineInput.value;
+    
+    // Validate input fields
+    if (!name || !description || !deadline) {
+        alert('Please fill out all fields.');
+        return;
+    }
+    
+    // Update the tasks array
+    tasks.push({
+        name: name,
+        description: description,
+        deadline: deadline
+    });
+    
     render();
+    
+    // Reset form fields
+    taskForm.reset();
 }
+
 // Function to render tasks in the table
 function render() {
-    // TODO: Use array methods to create a new table row of data for each item in the arr
     taskTable.innerHTML = tasks.map(task => `
     <tr>
         <td>${task.name}</td>
@@ -38,15 +52,14 @@ function render() {
     </tr>
 `).join('');
 }
+
 // Function to initialize the table
 function init() {
-    taskTable.innerHTML = ''; // Clear the table
-    tasks = []; // Reset the tasks array
-    render(); // Call the render function
+    render();
 }
 
 // Event listener for form submission
 taskForm.addEventListener('submit', handleSubmission);
 
-//Call the init function to set up the initial state of the app 
+// Call the init function to set up the initial state of the app
 init();
