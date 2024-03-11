@@ -31,7 +31,8 @@ function handleSubmission(event) {
     tasks.push({
         name: name,
         description: description,
-        deadline: deadline
+        deadline: deadline,
+        completed: false // Adding the completed property
     });
     
     render();
@@ -39,6 +40,7 @@ function handleSubmission(event) {
     // Reset form fields
     taskForm.reset();
 }
+
 
 // Function to render tasks in the table
 function render() {
@@ -66,15 +68,33 @@ init();
 
 // Function to mark a task as complete
 function markTaskComplete(button) {
-    // Find the index of the task in the tasks array
-    const index = button.parentNode.parentNode.rowIndex - 1; // Adjusting for the header row
+    console.log('markTaskComplete function called');
+    // Find the closest <tr> element containing the button
+    const row = button.closest('tr');
     
+    // Find the index of the row within the table
+    const index = Array.from(row.parentNode.children).indexOf(row);
+    
+    // Check if index is valid
+    if (index === -1) {
+        console.error('Error: Invalid row index');
+        return;
+    }
+
+    // Log the task before updating
+    console.log('Task before update:', tasks[index]);
+
     // Update the task status 
     tasks[index].completed = true;
+
+    // Log the task after updating
+    console.log('Task after update:', tasks[index]);
 
     // Re-render the tasks
     render();
 }
+
+
 
 // Function to remove a task
 function removeTask(button) {
