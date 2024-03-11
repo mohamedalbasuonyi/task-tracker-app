@@ -63,3 +63,28 @@ taskForm.addEventListener('submit', handleSubmission);
 
 // Call the init function to set up the initial state of the app
 init();
+
+// Function to mark a task as complete
+function markTaskComplete(button) {
+    // Find the index of the task in the tasks array
+    const index = button.parentNode.parentNode.rowIndex - 1; // Adjusting for the header row
+    
+    // Update the task status 
+    tasks[index].completed = true;
+
+    // Re-render the tasks
+    render();
+}
+
+// Function to remove a task
+function removeTask(button) {
+    // Find the index of the task in the tasks array
+    const index = button.parentNode.parentNode.rowIndex - 1; // Adjusting for the header row
+    
+    // Remove the task from the tasks array
+    tasks.splice(index, 1);
+
+    // Re-render the tasks
+    render();
+}
+
